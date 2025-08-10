@@ -4,8 +4,10 @@ import ResumePreview from '../../components/ResumePreview'
 import TemplateSelector from '../../components/TemplateSelector'
 import { useRouter } from 'next/navigation'
 import { Plus, Trash2, Download, Target, Save, User, Briefcase, GraduationCap, Award, CheckCircle } from 'lucide-react'
+import ExportModal from '@/components/ExportModal'
 
 export default function Builder() {
+    const [showExport, setShowExport] = useState(false)
   const router = useRouter()
   const defaultData = {
     personal: { name: '', title: '', email: '', phone: '', location: '' },
@@ -63,26 +65,15 @@ export default function Builder() {
 
 
 
-async function handleDownload() {
+function handleDownload() {
   if (!data?.personal?.name?.trim()) {
     setDownloadStatus('Please add your name before exporting');
     setTimeout(() => setDownloadStatus(''), 3000);
     return;
   }
-
-  setDownloadStatus('Opening print dialog...');
-  try {
-    const printWindow = window.open('/print', '_blank', 'noopener,noreferrer');
-    if (!printWindow) {
-      setDownloadStatus('Popup blocked. Please allow popups or open /print manually.');
-    } else {
-      setTimeout(() => setDownloadStatus(''), 3000);
-    }
-  } catch (err) {
-    console.error('Print export error:', err);
-    setDownloadStatus('Failed to open print dialog.');
-  }
+  setShowExport(true)
 }
+
 
 
 
@@ -472,6 +463,12 @@ async function handleDownload() {
           </div>
         </div>
       </div>
+     {showExport && (
+        <ExportModal
+          data={data}
+          onClose={() => setShowExport(false)}
+        />
+      )}
     </div>
   )
 }

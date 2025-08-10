@@ -1,10 +1,26 @@
 import React, { forwardRef } from 'react';
 
 
-const ResumePreview = forwardRef(({ data }, ref) => {
+const ResumePreview = forwardRef(({ data, isExport = false }, ref) => {
   const p = data.personal || {};
   const template = data.template || 'modern';
-
+  if (isExport) {
+    return (
+      <div
+        ref={ref}
+        className="flex flex-col items-center justify-center text-center max-w-[21cm] mx-auto bg-white text-slate-900 font-sans p-20"
+        style={{ height: '100vh' }}
+      >
+        <div className="animate-pulse">
+          <h1 className="text-3xl font-bold mb-4 text-indigo-600">Exporting Resume</h1>
+          <p className="text-slate-600 mb-6">
+            Please wait while we prepare <span className="font-semibold">{p.name || 'Your Name'}</span>’s professional resume...
+          </p>
+          <div className="w-16 h-16 border-4 border-indigo-300 border-t-indigo-600 rounded-full animate-spin mx-auto"></div>
+        </div>
+      </div>
+    );
+  }
   if (template === 'modern') {
     return (
       <div ref={ref}  className="max-w-[21cm] mx-auto bg-white text-slate-900 font-sans">

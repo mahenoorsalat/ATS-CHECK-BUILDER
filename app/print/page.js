@@ -4,12 +4,17 @@ import ResumePreview from '../../components/ResumePreview'
 
 export default function PrintPage() {
   const [data, setData] = useState(null)
+  const [showExport, setShowExport] = useState(false)
   const previewRef = useRef(null)
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('resume_data')
+      const saved = sessionStorage.getItem('resume_print_data')
+      const exportFlag = sessionStorage.getItem('resume_export_flag') === 'true'
+      sessionStorage.removeItem('resume_export_flag') // reset
+
       setData(saved ? JSON.parse(saved) : {})
+      setShowExport(exportFlag)
     } catch {
       setData({})
     }
@@ -17,20 +22,19 @@ export default function PrintPage() {
 
   useEffect(() => {
     if (!data) return
+
     const timer = setTimeout(() => {
-      window.print()
-    }, 400)
+      setShowExport(false)
+      setTimeout(() => window.print(), 300) // give time to render actual content
+    }, showExport ? 1200 : 300) // export animation delay
 
-    const handleAfterPrint = () => {
-      window.close()
-    }
-
+    const handleAfterPrint = () => window.close()
     window.addEventListener('afterprint', handleAfterPrint)
     return () => {
       clearTimeout(timer)
       window.removeEventListener('afterprint', handleAfterPrint)
     }
-  }, [data])
+  }, [data, showExport])
 
   return (
     <div className="bg-white mx-auto" style={{ width: '210mm', minHeight: '297mm' }}>
@@ -40,7 +44,7 @@ export default function PrintPage() {
         body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       `}</style>
       {data ? (
-        <ResumePreview ref={previewRef} data={data} />
+        <ResumePreview ref={previewRef} data={data} isExport={showExport} />
       ) : (
         <div style={{ padding: 24 }}>Preparing preview…</div>
       )}

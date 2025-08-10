@@ -1,7 +1,23 @@
 @import "tailwindcss";
 
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+  .print-area, .print-area * {
+    visibility: visible !important;
+  }
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
 
-
+::-webkit-scrollbar{
+  width: 0px;;
+}
 body {
   background: var(--background);
   color: var(--foreground);
