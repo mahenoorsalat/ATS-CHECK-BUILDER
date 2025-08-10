@@ -2,8 +2,6 @@
 import { useState, useEffect, useRef } from 'react'
 import ResumePreview from '../../components/ResumePreview'
 import TemplateSelector from '../../components/TemplateSelector'
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
 import { useRouter } from 'next/navigation'
 import { Plus, Trash2, Download, Target, Save, User, Briefcase, GraduationCap, Award, CheckCircle } from 'lucide-react'
 
@@ -67,56 +65,22 @@ export default function Builder() {
 
 async function handleDownload() {
   if (!data?.personal?.name?.trim()) {
-    setDownloadStatus('Please add your name before downloading');
+    setDownloadStatus('Please add your name before exporting');
     setTimeout(() => setDownloadStatus(''), 3000);
     return;
   }
 
-  setIsLoading(true);
-  setDownloadStatus('Preparing download...');
-
+  setDownloadStatus('Opening print dialog...');
   try {
-    const el = previewRef.current;
-    if (!el) throw new Error('Preview element not found');
-
-    // Make sure we capture the *full* preview, not just the visible scroll area
-    const canvas = await html2canvas(el, {
-      scale: 2,
-      useCORS: true,
-      logging: false,
-      windowWidth: el.scrollWidth,
-      windowHeight: el.scrollHeight
-    });
-
-    const imgData = canvas.toDataURL('image/png');
-
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    // If content is taller than one page, split into multiple pages
-    let position = 0;
-    if (pdfHeight <= pdf.internal.pageSize.getHeight()) {
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    const printWindow = window.open('/print', '_blank', 'noopener,noreferrer');
+    if (!printWindow) {
+      setDownloadStatus('Popup blocked. Please allow popups or open /print manually.');
     } else {
-      let heightLeft = pdfHeight;
-      while (heightLeft > 0) {
-        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
-        heightLeft -= pdf.internal.pageSize.getHeight();
-        position -= pdf.internal.pageSize.getHeight();
-        if (heightLeft > 0) pdf.addPage();
-      }
+      setTimeout(() => setDownloadStatus(''), 3000);
     }
-
-    pdf.save(`${data.personal.name || 'resume'}.pdf`);
-
-    setDownloadStatus('✓ Resume downloaded successfully!');
   } catch (err) {
-    console.error('Download error:', err);
-    setDownloadStatus('Download failed. Please try again.');
-  } finally {
-    setIsLoading(false);
-    setTimeout(() => setDownloadStatus(''), 3000);
+    console.error('Print export error:', err);
+    setDownloadStatus('Failed to open print dialog.');
   }
 }
 
