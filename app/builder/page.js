@@ -168,70 +168,76 @@ function handleDownload() {
           {/* Left Panel - Form */}
           <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
             {/* Personal Information */}
-            {activeSection === 'personal' && (
-              <div>
-                <div className="flex items-center mb-6">
-                  <User className="w-5 h-5 text-indigo-600 mr-3" />
-                  <h2 className="text-xl font-semibold text-slate-900">Personal Information</h2>
-                </div>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">Full Name *</label>
-                    <input 
-                      name="name" 
-                      value={data.personal.name} 
-                      onChange={updatePersonal} 
-                      placeholder="John Doe" 
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">Professional Title</label>
-                    <input 
-                      name="title" 
-                      value={data.personal.title} 
-                      onChange={updatePersonal} 
-                      placeholder="Senior Software Engineer" 
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
-                    />
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Email</label>
-                      <input 
-                        name="email" 
-                        type="email"
-                        value={data.personal.email} 
-                        onChange={updatePersonal} 
-                        placeholder="john@example.com" 
-                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Phone</label>
-                      <input 
-                        name="phone" 
-                        value={data.personal.phone} 
-                        onChange={updatePersonal} 
-                        placeholder="+1 (555) 123-4567" 
-                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">Location</label>
-                    <input 
-                      name="location" 
-                      value={data.personal.location} 
-                      onChange={updatePersonal} 
-                      placeholder="San Francisco, CA" 
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
+         {activeSection === 'personal' && (
+  <div>
+    <div className="flex items-center mb-6">
+      <User className="w-5 h-5 text-indigo-600 mr-3" />
+      <h2 className="text-xl font-semibold text-slate-900">Personal Information</h2>
+    </div>
+    <div className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-2">Full Name *</label>
+        <input 
+          name="name" 
+          value={data.personal.name} 
+          onChange={updatePersonal} 
+          placeholder="John Doe" 
+          autoComplete="off"
+          className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
+          required
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-2">Professional Title</label>
+        <input 
+          name="title" 
+          value={data.personal.title} 
+          onChange={updatePersonal} 
+          placeholder="Senior Software Engineer" 
+          autoComplete="off"
+          className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
+        />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Email</label>
+          <input 
+            name="email" 
+            type="email"
+            value={data.personal.email} 
+            onChange={updatePersonal} 
+            placeholder="john@example.com" 
+            autoComplete="off"
+            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Phone</label>
+          <input 
+            name="phone" 
+            value={data.personal.phone} 
+            onChange={updatePersonal} 
+            placeholder="+1 (555) 123-4567" 
+            autoComplete="off"
+            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
+          />
+        </div>
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-2">Location</label>
+        <input 
+          name="location" 
+          value={data.personal.location} 
+          onChange={updatePersonal} 
+          placeholder="San Francisco, CA" 
+          autoComplete="off"
+          className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
+        />
+      </div>
+    </div>
+  </div>
+)}
+
 
             {/* Skills Section */}
             {activeSection === 'skills' && (
