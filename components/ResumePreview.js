@@ -7,7 +7,7 @@ const ResumePreview = forwardRef(({ data }, ref) => {
 
   if (template === 'modern') {
     return (
-      <div  className="max-w-[21cm] mx-auto bg-white text-slate-900 font-sans">
+      <div ref={ref}  className="max-w-[21cm] mx-auto bg-white text-slate-900 font-sans">
         {/* Header */}
         <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 rounded-t-lg">
           <h1 className="text-3xl font-bold mb-2">{p.name || 'Your Full Name'}</h1>
@@ -105,7 +105,7 @@ const ResumePreview = forwardRef(({ data }, ref) => {
 
   if (template === 'minimal') {
     return (
-      <div  className="max-w-[21cm] mx-auto bg-white text-slate-900 font-sans">
+      <div ref={ref}  className="max-w-[21cm] mx-auto bg-white text-slate-900 font-sans">
         {/* Header */}
         <header className="border-b-4 border-slate-900 pb-6 mb-8">
           <h1 className="text-4xl font-light mb-2">{p.name || 'Your Full Name'}</h1>
